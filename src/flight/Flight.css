@@ -1,0 +1,33 @@
+.flight-item {
+    margin-bottom: 10px;
+}
+
+.flight-number {
+    color: gray;
+    padding-right: 20px;
+    vertical-align: middle;
+}
+
+.inline-icon {
+    margin-right: 5px;
+    margin-bottom: 3px;
+}
+
+.separator-limit {
+    padding: 0 8px;
+}
+
+.time-group {
+    margin-left: 20px;
+}
+
+.buttons-group {
+}
+
+.details-button {
+    margin-right: 5px;
+}
+
+.destinations-group {
+    font-weight: bold;
+}

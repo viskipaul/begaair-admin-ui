@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import Main from "./main/Main";
+import {Container, Nav, Navbar} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {IoAirplaneOutline, IoLogOutOutline} from "react-icons/io5";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+          <Navbar bg="primary" variant="dark" expand="lg">
+              <Container fluid>
+                  <Navbar.Brand href="#home" className="brand-text">
+                      <IoAirplaneOutline className="brand-icon" />BegaAir Admin Console
+                  </Navbar.Brand>
+                  <Nav className="justify-content-end">
+                      <Nav.Link href="/logout">
+                          <IoLogOutOutline className="brand-icon" />
+                          Logout
+                      </Nav.Link>
+                  </Nav>
+              </Container>
+          </Navbar>
+        <Main />
+      </div>
   );
 }
 
