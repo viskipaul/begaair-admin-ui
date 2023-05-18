@@ -9,14 +9,14 @@ const Flight = (props) => {
         <div>
             <ListGroup.Item className="flight-item d-flex justify-content-between align-items-center">
                 <div className="flight-number">
-                    {props.item.flightNumber}
+                    {props.item.id}
                 </div>
                 <div className="destinations-group">
                     <FaPlaneDeparture className="inline-icon" />
-                    {props.item.departure}
+                    {props.item.departureLocation}
                     <span className="separator-limit">-</span>
                     <FaPlaneArrival className="inline-icon" />
-                    {props.item.arrival}
+                    {props.item.arrivalLocation}
                 </div>
                 <div className="time-group">
                     <FaRegClock className="inline-icon" />

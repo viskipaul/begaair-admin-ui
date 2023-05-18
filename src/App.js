@@ -10,12 +10,9 @@ function App() {
     const {token, setToken} = useToken();
 
     if (token === "") {
-        console.log("Token: ", token);
         return(
             <Login setToken={setToken} />
         )
-    } else {
-        console.log("Token: ", token);
     }
 
     return (

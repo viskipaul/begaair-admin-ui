@@ -13,8 +13,12 @@ const Main = (props) => {
     const [showAdd, setShowAdd] = useState(false);
     const [flight, setFlight] = useState(mockFlights[0]);
     const [flights, setFlights] = useState([]);
+    const {token, setToken} = useToken();
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        fetchFlightsData();
+    };
 
     const handleShow = (flight) => {
         setFlight(flight);
@@ -27,21 +31,33 @@ const Main = (props) => {
 
     const handleCloseAdd = () => {
         setShowAdd(false);
+        fetchFlightsData();
     }
 
     const handleDelete = (flight) => {
-        console.log("Delete flight: ", flight);
+
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+
+        fetch("/Flight?id=" + flight.id, requestOptions)
+            .then(() => {
+                fetchFlightsData();
+            })
     }
 
     const fetchFlightsData = () => {
-        console.log("Fetching data...")
-        fetch("https://192.168.1.7/Flight")
+        const headers = { 'Authorization': 'Bearer ' + token };
+
+        fetch("/Flight", {headers})
             .then(response => {
                 return response.json();
             })
             .then(data => {
                 setFlights(data);
-                console.log(flights);
             })
     }
 
@@ -50,11 +66,11 @@ const Main = (props) => {
     }, [])
 
     const results = [];
-    mockFlights.forEach((flight) => {
+    flights.forEach((flight) => {
         results.push(
-            <Flight item={flight} onDetails={() => handleShow(flight)} onDelete = {() => handleDelete(flight)}/>
-        );
-    });
+            <Flight item={flight} onDetails={() => handleShow(flight)} onDelete={() => handleDelete(flight)} />
+        )
+    })
 
     return(
         <div className="main-page">

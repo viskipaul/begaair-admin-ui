@@ -7,8 +7,22 @@ const Login = ({setToken}) => {
     const [password, setPassword] = useState("");
 
     const handleSubmit = async e => {
-        e.preventDefault()
-        const token = "dummy-token";
+        e.preventDefault();
+
+        // const requestOptions = {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //         email: username,
+        //         password: password,
+        //     })
+        // }
+        //
+        // fetch('/Login', requestOptions)
+        //     .then((data) => {
+        //         console.log(data);
+        //     });
+
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4MzhmMGJjOC0yM2U4LTQwYzAtYTRjMi0zMWYyNTYyNWNkMTMiLCJlbWFpbCI6ImFkbWluQGJlZ2FhaXIuY29tIiwidW5pcXVlX25hbWUiOiJBZG1pbiBBZG1pbmlzdHJhdG9yIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg0MzU0NjQ5LCJleHAiOjE2ODUyMTg2NDksImlhdCI6MTY4NDM1NDY0OX0.NcWP6FOOOpA2PDLthfmwWJ6FB3yJoUR_Y3YevLBGFFo";
         setToken(token);
     }
 
