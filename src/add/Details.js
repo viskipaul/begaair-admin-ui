@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 import useToken from "../utils/useToken";
+import moment from "moment";
 
 const Details = (props) => {
     const [flightNumber, setFlightNumber] = useState("");
@@ -22,18 +23,19 @@ const Details = (props) => {
                 'Content-type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify({
+                flightNumber: flightNumber,
                 departureLocation: departure,
                 arrivalLocation: arrival,
                 seats: seat,
                 price: price,
-                departureTime: "2023-05-19T19:51:26.037Z",
-                arrivalTime: "2023-05-19T20:51:26.037Z",
-                serviceStartDate: "2023-05-18T19:51:26.037Z",
-                serviceEndDate: "2023-05-23T19:51:26.037Z",
+                departureTime: departureTime,
+                arrivalTime: arrivalTime,
+                serviceStartDate: start,
+                serviceEndDate: end,
             })
         }
 
-        fetch("/Flight", requestOptions)
+        fetch("https://ticketsmanagementmicroservice.azurewebsites.net/Flight", requestOptions)
             .then((data) => {
                 props.handleClose();
 
@@ -41,6 +43,7 @@ const Details = (props) => {
     }
 
     const handleUpdate = () => {
+        console.log("UPDATE TOKEN: ", token);
         const requestOptions = {
             method: 'PATCH',
             headers: {
@@ -48,19 +51,20 @@ const Details = (props) => {
                 'Content-type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify({
+                flightNumber: flightNumber ? flightNumber : props.flight.flightNumber,
                 id: props.flight.id,
                 departureLocation: departure ? departure : props.flight.departureLocation,
                 arrivalLocation: arrival ? arrival : props.flight.arrivalLocation,
                 seats: seat ? seat : props.flight.seats,
                 price: price ? price : props.flight.price,
-                departureTime: "2023-05-19T19:51:26.037Z",
-                arrivalTime: "2023-05-19T20:51:26.037Z",
-                serviceStartDate: "2023-05-18T19:51:26.037Z",
-                serviceEndDate: "2023-05-23T19:51:26.037Z",
+                departureTime: departureTime ? departureTime : props.flight.departureTime,
+                arrivalTime: arrivalTime ? arrivalTime : props.flight.arrivalTime,
+                serviceStartDate: start ? start : props.flight.serviceStartDate,
+                serviceEndDate: end ? end : props.flight.serviceEndDate
             })
         }
 
-        fetch("/Flight", requestOptions)
+        fetch("https://ticketsmanagementmicroservice.azurewebsites.net/Flight", requestOptions)
             .then((data) => {
                 props.handleClose();
             });
@@ -70,16 +74,15 @@ const Details = (props) => {
         <Modal show={props.show} onHide={props.handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    {props.type === "add" ? "Details a flight" : "Details for flight " + props.flight.id}
+                    {props.type === "add" ? "Details a flight" : "Details for flight " + props.flight.flightNumber}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlFlightNumber">
                         <Form.Label>Flight Number</Form.Label>
-                        <Form.Control type="text"
-                                      placeholder="Flight number"
-                                      defaultValue={props.type === "update" ? props.flight.id : ""}
+                        <Form.Control placeholder="Flight number"
+                                      defaultValue={props.type === "update" ? props.flight.flightNumber : ""}
                                       onChange={e => setFlightNumber(e.target.value)}/>
                     </Form.Group>
 
@@ -99,16 +102,24 @@ const Details = (props) => {
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlFlightNumber">
                         <Form.Label>Start date</Form.Label>
-                        <Form.Control placeholder="Start date"
-                                      defaultValue={props.type === "update" ? props.flight.serviceStartDate : ""}
-                                      onChange={e => setStart(e.target.value)}/>
+                        <Form.Control type="date"
+                                      placeholder="Start date"
+                                      defaultValue={props.type === "update" ? moment(props.flight.serviceStartDate).format("YYYY-MM-DD") : ""}
+                                      onChange={e => {
+                                          const date = moment(e.target.value, "YYYY-MM-DD").toISOString();
+                                          setStart(date);
+                                      }}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlFlightNumber">
                         <Form.Label>End date</Form.Label>
-                        <Form.Control placeholder="End date"
-                                      defaultValue={props.type === "update" ? props.flight.serviceEndDate : ""}
-                                      onChange={e => setEnd(e.target.value)}/>
+                        <Form.Control type="date"
+                                      placeholder="End date"
+                                      defaultValue={props.type === "update" ? moment(props.flight.serviceEndDate).format("YYYY-MM-DD") : ""}
+                                      onChange={e => {
+                                          const date = moment(e.target.value, "YYYY-MM-DD").toISOString();
+                                          setEnd(date);
+                                      }}/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="exampleForm.ControlFlightNumber">

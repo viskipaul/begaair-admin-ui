@@ -9,7 +9,7 @@ const Flight = (props) => {
         <div>
             <ListGroup.Item className="flight-item d-flex justify-content-between align-items-center">
                 <div className="flight-number">
-                    {props.item.id}
+                    {props.item.flightNumber}
                 </div>
                 <div className="destinations-group">
                     <FaPlaneDeparture className="inline-icon" />

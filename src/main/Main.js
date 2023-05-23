@@ -8,7 +8,7 @@ import {IoAddCircleOutline} from "react-icons/io5";
 import Details from "../add/Details";
 import useToken from "../utils/useToken";
 
-const Main = (props) => {
+const Main = () => {
     const [show, setShow] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
     const [flight, setFlight] = useState(mockFlights[0]);
@@ -43,7 +43,7 @@ const Main = (props) => {
             }
         }
 
-        fetch("/Flight?id=" + flight.id, requestOptions)
+        fetch("https://ticketsmanagementmicroservice.azurewebsites.net/Flight?id=" + flight.id, requestOptions)
             .then(() => {
                 fetchFlightsData();
             })
@@ -52,11 +52,12 @@ const Main = (props) => {
     const fetchFlightsData = () => {
         const headers = { 'Authorization': 'Bearer ' + token };
 
-        fetch("/Flight", {headers})
+        fetch("https://ticketsmanagementmicroservice.azurewebsites.net/Flight", {headers})
             .then(response => {
                 return response.json();
             })
             .then(data => {
+                console.log(data);
                 setFlights(data);
             })
     }
