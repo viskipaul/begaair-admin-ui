@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {mockFlights} from "../utils/flights";
 import Flight from "../flight/Flight";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -49,7 +49,7 @@ const Main = () => {
             })
     }
 
-    const fetchFlightsData = () => {
+    const fetchFlightsData = useCallback(() => {
         const headers = { 'Authorization': 'Bearer ' + token };
 
         fetch("https://ticketsmanagementmicroservice.azurewebsites.net/Flight", {headers})
@@ -57,19 +57,18 @@ const Main = () => {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 setFlights(data);
             })
-    }
+    }, [token]);
 
     useEffect(() => {
         fetchFlightsData();
-    }, fetchFlightsData)
+    }, [fetchFlightsData])
 
     const results = [];
     flights.forEach((flight) => {
         results.push(
-            <Flight item={flight} onDetails={() => handleShow(flight)} onDelete={() => handleDelete(flight)} />
+            <Flight key={flight.id} item={flight} onDetails={() => handleShow(flight)} onDelete={() => handleDelete(flight)} />
         )
     })
 
