@@ -13,7 +13,7 @@ const Details = (props) => {
     const [price, setPrice] = useState(0);
     const [departureTime, setDepartureTime] = useState("");
     const [arrivalTime, setArrivalTime] = useState("");
-    const {token, setToken} = useToken();
+    const {token} = useToken();
 
     const handleAdd = () => {
         const requestOptions = {

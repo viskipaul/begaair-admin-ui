@@ -13,7 +13,7 @@ const Main = () => {
     const [showAdd, setShowAdd] = useState(false);
     const [flight, setFlight] = useState(mockFlights[0]);
     const [flights, setFlights] = useState([]);
-    const {token, setToken} = useToken();
+    const {token} = useToken();
 
     const handleClose = () => {
         setShow(false);
@@ -64,7 +64,7 @@ const Main = () => {
 
     useEffect(() => {
         fetchFlightsData();
-    }, [])
+    })
 
     const results = [];
     flights.forEach((flight) => {
