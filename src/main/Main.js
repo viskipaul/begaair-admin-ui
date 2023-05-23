@@ -64,7 +64,7 @@ const Main = () => {
 
     useEffect(() => {
         fetchFlightsData();
-    })
+    }, fetchFlightsData)
 
     const results = [];
     flights.forEach((flight) => {
