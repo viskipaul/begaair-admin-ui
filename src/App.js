@@ -9,7 +9,9 @@ import useToken from "./utils/useToken";
 function App() {
     const {token, setToken} = useToken();
 
-    if (token === "") {
+    console.log("Token: ", token);
+
+    if (token === "" || !token) {
         return(
             <Login setToken={setToken} />
         )
