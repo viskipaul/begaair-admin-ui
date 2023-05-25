@@ -3,7 +3,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import "./Flight.css";
 import {FaPlaneArrival, FaPlaneDeparture, FaRegClock} from "react-icons/fa";
 import {Button} from "react-bootstrap";
-import {Bars} from "react-loader-spinner";
 
 const Flight = (props) => {
     return(
