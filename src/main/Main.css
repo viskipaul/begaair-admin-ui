@@ -12,3 +12,11 @@
     margin-bottom: 3px;
     margin-right: 3px;
 }
+
+.button-loader-wrapper {
+    display: flex;
+}
+
+.loader {
+    margin-top: 18px;
+}

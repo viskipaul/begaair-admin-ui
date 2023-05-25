@@ -7,12 +7,14 @@ import {Button} from "react-bootstrap";
 import {IoAddCircleOutline} from "react-icons/io5";
 import Details from "../add/Details";
 import useToken from "../utils/useToken";
+import {Bars} from "react-loader-spinner";
 
 const Main = () => {
     const [show, setShow] = useState(false);
     const [showAdd, setShowAdd] = useState(false);
     const [flight, setFlight] = useState(mockFlights[0]);
     const [flights, setFlights] = useState([]);
+    const [showLoader, setShowLoader] = useState(false);
     const {token} = useToken();
 
     const handleClose = () => {
@@ -51,13 +53,14 @@ const Main = () => {
 
     const fetchFlightsData = useCallback(() => {
         const headers = { 'Authorization': 'Bearer ' + token };
-
+        setShowLoader(true);
         fetch("https://ticketsmanagementmicroservice.azurewebsites.net/Flight", {headers})
             .then(response => {
                 return response.json();
             })
             .then(data => {
                 setFlights(data);
+                setShowLoader(false);
             })
     }, [token]);
 
@@ -77,10 +80,13 @@ const Main = () => {
             <Details show={show} handleClose={() => handleClose()} flight={flight} type="update"/>
             <Details show={showAdd} handleClose={() => handleCloseAdd()} flight={flight} type="add"/>
 
-            <Button variant="success" className="add-button" onClick={() => handleShowAdd()}>
-                <IoAddCircleOutline className="button-icon"/>
-                Add a flight
-            </Button>
+            <div className="button-loader-wrapper">
+                <Button variant="success" className="add-button" onClick={() => handleShowAdd()}>
+                    <IoAddCircleOutline className="button-icon"/>
+                    Add a flight
+                </Button>
+                <Bars height="40" width="80" color="blue" ariaLabel="bars-loading" visible={showLoader} wrapperClass="loader"/>
+            </div>
 
             <ListGroup key="md" className="my-2">
                 {results}

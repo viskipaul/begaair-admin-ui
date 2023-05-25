@@ -12,3 +12,9 @@
 .login-button {
     width: 20%;
 }
+
+.loader-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}

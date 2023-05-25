@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import "./Login.css";
 import {Button, Form} from "react-bootstrap";
+import {Bars} from "react-loader-spinner";
 
 const Login = ({setToken}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [showLoader, setShowLoader] = useState(false);
 
     const handleSubmit = async e => {
         e.preventDefault();
+        setShowLoader(true);
 
         const requestOptions = {
             method: 'POST',
@@ -28,6 +31,7 @@ const Login = ({setToken}) => {
                 if (data.hasOwnProperty("token")) {
                     setToken(data.token)
                 }
+                setShowLoader(false);
             });
     }
 
@@ -51,6 +55,9 @@ const Login = ({setToken}) => {
                     <Button variant="primary" className="login-button" type="submit">
                         Login
                     </Button>
+                </div>
+                <div className="login-button-wrapper loader-wrapper">
+                    <Bars height="40" width="80" color="blue" ariaLabel="bars-loading" visible={showLoader} />
                 </div>
             </Form>
         </div>
