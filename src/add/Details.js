@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 import useToken from "../utils/useToken";
 import moment from "moment";
+import {Bars} from "react-loader-spinner";
 
 const Details = (props) => {
     const [flightNumber, setFlightNumber] = useState("");
@@ -13,9 +14,11 @@ const Details = (props) => {
     const [price, setPrice] = useState(0);
     const [departureTime, setDepartureTime] = useState("");
     const [arrivalTime, setArrivalTime] = useState("");
+    const [showLoader, setShowLoader] = useState(false);
     const {token} = useToken();
 
     const handleAdd = () => {
+        setShowLoader(true);
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -37,13 +40,13 @@ const Details = (props) => {
 
         fetch("https://ticketsmanagementmicroservice.azurewebsites.net/Flight", requestOptions)
             .then((data) => {
+                setShowLoader(false);
                 props.handleClose();
-
             });
     }
 
     const handleUpdate = () => {
-        console.log("UPDATE TOKEN: ", token);
+        setShowLoader(true);
         const requestOptions = {
             method: 'PATCH',
             headers: {
@@ -66,6 +69,7 @@ const Details = (props) => {
 
         fetch("https://ticketsmanagementmicroservice.azurewebsites.net/Flight", requestOptions)
             .then((data) => {
+                setShowLoader(false);
                 props.handleClose();
             });
     }
@@ -74,7 +78,7 @@ const Details = (props) => {
         <Modal show={props.show} onHide={props.handleClose}>
             <Modal.Header closeButton>
                 <Modal.Title>
-                    {props.type === "add" ? "Details a flight" : "Details for flight " + props.flight.flightNumber}
+                    {props.type === "add" ? "Add a flight" : "Details for flight " + props.flight.flightNumber}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -152,6 +156,9 @@ const Details = (props) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
+                <div className="loader-wrapper">
+                    <Bars height="40" width="80" color="blue" ariaLabel="bars-loading" visible={showLoader} />
+                </div>
                 <Button variant="secondary" onClick={props.handleClose}>
                     Close
                 </Button>

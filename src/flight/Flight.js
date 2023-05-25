@@ -3,6 +3,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import "./Flight.css";
 import {FaPlaneArrival, FaPlaneDeparture, FaRegClock} from "react-icons/fa";
 import {Button} from "react-bootstrap";
+import {Bars} from "react-loader-spinner";
 
 const Flight = (props) => {
     return(
@@ -13,10 +14,10 @@ const Flight = (props) => {
                 </div>
                 <div className="destinations-group">
                     <FaPlaneDeparture className="inline-icon" />
-                    {props.item.departureLocation}
+                    {props.item.departureLocation.split(" - ")[0]}
                     <span className="separator-limit">-</span>
                     <FaPlaneArrival className="inline-icon" />
-                    {props.item.arrivalLocation}
+                    {props.item.arrivalLocation.split(" - ")[0]}
                 </div>
                 <div className="time-group">
                     <FaRegClock className="inline-icon" />
